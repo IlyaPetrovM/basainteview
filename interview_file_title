@@ -1,0 +1,22 @@
+select 
+	i.id,
+	concat(
+	i.id,' ' ,
+	i.start_date,' ' , 
+	inf.last_name,' ',
+	substring(inf.first_name,1,1),'.',
+	substring(inf.middle_name,1,1),'., ',
+	sob.last_name,' ',
+	substring(sob.first_name,1,1),'.') as 'Название папки'
+from
+    interview as i,
+	informant as inf,
+	sobiratel as sob,
+    give as g,
+	take as t
+where
+    (inf.id = g.informant_id
+        and i.id = g.interview_id
+and i.id = t.interview_id
+and sob.id = t.sobiratel_id)
+group by i.id desc;

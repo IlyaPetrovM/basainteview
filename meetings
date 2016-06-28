@@ -1,0 +1,22 @@
+select 
+	group_concat(distinct 
+		i.id, ' (',i.start_date,')' 
+		order by i.start_date DESC separator ',\n') as 'Номер интервью',  
+	concat(inf.last_name,' ',
+		inf.first_name,' ', inf.middle_name) as 'информант',
+	inf.year_of_birth,
+	group_concat(distinct sob.last_name,' ',
+	substring(sob.first_name,1,1),'.' order by sob.last_name ASC separator ',\n') as 'Собиратели'
+from
+    interview as i,
+	informant as inf,
+	sobiratel as sob,
+    give as g,
+	take as t
+where
+    (inf.id = g.informant_id
+        and i.id = g.interview_id
+and i.id = t.interview_id
+and sob.id = t.sobiratel_id)
+group by inf.id 
+order by inf.last_name ASC;

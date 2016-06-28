@@ -1,0 +1,19 @@
+select i.id as 'Идентефикатор',  
+i.start_date,
+i.record_start_time,
+	inf.last_name,
+	inf.first_name,
+	inf.year_of_birth,
+	sob.last_name,
+	sob.first_name
+from
+    interview as i,
+	informant as inf,
+	sobiratel as sob,
+    give as g,
+	take as t
+where
+    (inf.id = g.informant_id
+        and i.id = g.interview_id
+and i.id = t.interview_id
+and sob.id = t.sobiratel_id);

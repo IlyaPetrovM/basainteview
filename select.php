@@ -19,7 +19,7 @@ class TableRows extends RecursiveIteratorIterator {
 } 
 
 
-function execute_query($query){
+function execute_query($q){
 
 $servername = "localhost";
 $username = "user";
@@ -28,7 +28,7 @@ $dbname = "derevnia";
 	try {
 	    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	    $stmt = $conn->prepare($query); 
+	    $stmt = $conn->prepare($q); 
 	    $stmt->execute();
 
 	    // set the resulting array to associative

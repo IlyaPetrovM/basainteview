@@ -1,0 +1,24 @@
+select i.id as 'Номер в базе',  
+	i.start_date as 'Дата интервью',
+	concat(hour(i.record_start_time),':',minute(i.record_start_time)) as 'Время начала',
+	group_concat(distinct 
+		inf.last_name,' ',
+		substring(inf.first_name,1,1),' ',
+		inf.year_of_birth, 'г.р.' 
+		order by inf.last_name ASC SEPARATOR ', ') as 'Информанты',
+	group_concat(distinct 
+		sob.last_name,' ',
+		substring(sob.first_name,1,1),'.' 
+		order by sob.last_name SEPARATOR ', ') as 'Собиратели'
+from
+    interview as i,
+	informant as inf,
+	sobiratel as sob,
+    give as g,
+	take as t
+where
+    (inf.id = g.informant_id
+        and i.id = g.interview_id
+and i.id = t.interview_id
+and sob.id = t.sobiratel_id)
+group by i.id;

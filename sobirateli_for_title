@@ -1,0 +1,13 @@
+SELECT 
+    group_concat(inf.last_name,
+        ' ',
+        substring(inf.first_name, 1, 1),
+        '.'
+        order by last_name ASC)
+from
+    informant AS inf
+where
+    (inf.id in (select 
+            informant_id
+        from
+            give));

@@ -1,13 +1,10 @@
 <?php
-
 echo "<meta charset='utf-8'><br/>";
 
 $servername = "localhost";
 $username = "admin";
 $password = "Licey1553";
 $dbname = "derevnia";
-
-
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
@@ -24,11 +21,11 @@ try {
             if($row!='table' && $value!=''){
                 if($row=="informant"){
                     foreach ($_POST['informant'] as $k => $v) {
-                        $q_informant .= "; INSERT INTO give (interview_id, informant_id) VALUES (".$interview_id.','.$v.")";
+                        $q_informant .= "; INSERT INTO give (interview_id, informant_id) VALUES ('".$interview_id."','".$v."')";
                     }
                 }elseif ($row=="sobiratel") {
                     foreach ($_POST['sobiratel'] as $k => $v) {
-                        $q_sobiratel .= "; INSERT INTO take (interview_id, sobiratel_id) VALUES (".$interview_id.','.$v.")";
+                        $q_sobiratel .= "; INSERT INTO take (interview_id, sobiratel_id) VALUES ('".$interview_id."','".$v."')";
                     }
                 }else{
                     $rows .= ",".$row;
@@ -36,13 +33,16 @@ try {
                 }
             }
         }
+        echo "<div><span>Скопируйте название папки с интервью:</span>"; 
+        echo  "<br><a href='index.php?l=interview_file_title&col=id&val=$interview_id'><button autofocus>Название папки в базе</button></a>";
+        echo $interview_id.' '.$_POST["start_date"].' '.$_POST["informant"][0].', '.$_POST["sobiratel"][0];
+        echo "</div>";
         $rows=substr($rows, 1);
         $values=substr($values, 1);
         $q_interview = "INSERT INTO $table ($rows) VALUES ($values)";
         $q_sobiratel = substr($q_sobiratel, 1);
         $query_vis = "<h1>$table</h1><code>$q_interview</code><h2>informant</h2>$q_informant<h2>sobiratel</h2>$q_sobiratel";
-        $query = "$q_interview $q_informant $q_sobiratel ";
-        echo $query_vis;
+        $query = "$q_interview $q_informant; $q_sobiratel ";
     }elseif ($table=='record') {
         $query='';
         $upload_dir = '/var/www/uploads/';
@@ -58,6 +58,7 @@ try {
                     echo "<li>Загружено - ".$basename." как ".$uploadfile."</li>";
                     $rows = '';
                     $values = '';
+                    
                     foreach ($_POST as $key => $value) {
                         if($key!='files' && $key!='table' && $value!='')
                         {
@@ -105,5 +106,5 @@ catch(PDOException $e)
     }
 
 $conn = null;
-echo  "<br><a href='index.php'>Главная страница</a>";
+echo  "<br><a href='index.php'><button>Главная страница</button></a>";
 ?>

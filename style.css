@@ -1,0 +1,93 @@
+ /* http://colorscheme.ru/#0M40Gjriiw0w0 */
+  #dt{text-indent: -500px;height:25px; width:200px;}
+    body{
+        margin: 1em auto;
+        width: 100%;
+        text-align: center;
+      }
+        select, input{
+            display: block;
+            margin: 1em auto;
+            background-color: white;
+            border-radius: 12px;
+            border-style: none;
+            width: 60%;
+            text-align: center;
+        }
+        .helper {
+          display: inline-block;
+          max-width: 60%;
+          background-color: white;
+            border-radius: 12px;
+            border-style: none;
+            text-align: center;
+        }
+        .helper:hover, nav a:hover, input:hover, input:focus{
+            background-color: #6D593C;
+            color: white;
+        }
+        .helper:active{
+          background-color: #7E6A4D;
+        }
+        ::selection {
+          background: black; /* Safari */
+          color: white;
+        }
+        ::-moz-selection {
+          background: black; /* Firefox */
+          color: white;
+        }
+      nav, form{
+            padding: 0.5em 1em;
+            margin: 0 auto;
+            max-width: 900px;
+            background-color: #C8AE85;
+            border-radius: 12px;
+            border-style: none;
+            display: block;
+      }
+      table {
+        max-width: 100%;
+        width: 900px;
+        margin: 0 auto;
+      }
+      nav ul {
+        list-style: none;
+      }
+      nav ul li{
+        display: inline-block;
+        margin: 0 5px;
+      }
+      td {
+        border-radius: 3px;
+      }
+      tr:hover{
+        background-color: #ccc;
+      }
+      nav a {
+        background-color: white;
+        padding: 5px;
+        line-height:25pt;
+        border-radius: 1em;
+        text-decoration: none;
+        color: #a00;
+      }
+
+table td a {
+  text-decoration: none;
+  text-align: center;
+  font-size: small;
+  color: red;
+}
+table td a.thead.DESC:after{
+  content: " (уб)";
+}
+table td a.thead.ASC:after{
+  content: " (вз)";
+}
+table td a.thead:after{
+  color: grey;
+}
+table{
+  border-color: white;
+}

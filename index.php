@@ -3,85 +3,46 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Добавление интервью</title>
+    <title>База интервью
+    </title>
     <meta content="">
+  <link type="text/css" href="style.css" rel="stylesheet" />
   </head>
-  <style type="text/css">
-  /* http://colorscheme.ru/#0M40Gjriiw0w0 */
-    body{
-        margin: 1em auto;
-        width: 100%;
-        text-align: center;
-      }
-        select, input{
-            display: block;
-            margin: 1em auto;
-            background-color: white;
-            border-radius: 1em;
-            border-style: none;
-            width: 60%;
-            text-align: center;
-        }
-        button {
-            display: block;
-            margin: 1em auto;
-            border-radius: 1em;
-            border-style: none;
-            text-align: center;
-          background-color: black;
-          color: #C8AE85;
-          min-width: 20%;
-          padding: 0 1em;
-          height: 2em;
-          font-weight: bold;
-        }
-        button:hover, nav a:hover, input:hover{
-            background-color: #6D593C;
-        }
-      nav, form{
-            padding: 0.5em 1em;
-            margin: 0 auto;
-            max-width: 900px;
-            background-color: #C8AE85;
-            border-radius: 2em;
-            border-style: none;
-            display: block;
-      }
-      table {
-        max-width: 100%;
-        width: 900px;
-        margin: 0 auto;
-      }
-      nav ul {
-        list-style: none;
-      }
-      nav ul li{
-        display: inline-block;
-        margin: 0 5px;
-      }
-      td {
-        border-radius: 3px;
-      }
-      tr:hover{
-        background-color: #ccc;
-      }
-      nav a {
-        background-color: white;
-        padding: 5px;
-        line-height:25pt;
-        border-radius: 1em;
-        text-decoration: none;
-        color: #a00;
-      }
-
-  </style>
   <body>
   <nav><?php include 'menu.php'; ?> </nav>
-  <h1><?php $page=$_GET["p"]; $lst = $_GET['l']; echo ($page.$lst); ?></h1> 
-  <?php include (htmlspecialchars($page).'.php'); 
+  <h1>
+  <?php 
+    $titles = array(
+    'sobiratel' => 'Собиратели',
+    'informant'=>'Информанты',
+    'view_interview'=>'Интервью',
+    'add_sobiratel' => 'Добавить собирателя',
+    'add_informant'=>'Добавить информанта',
+    'add_interview'=>'Добавить интервью'
+    );
+
+    $lst=$_GET["l"];
+    $page=$_GET["p"];
+    echo ($titles[$lst].$titles[$page]); 
+  ?>
+  </h1> 
+    <?php include (htmlspecialchars($page).'.php'); 
     if($lst!=""){
+      $col = $_GET['col'];
+      $val = $_GET['val'];
+      $order_by = "";
+      if($_GET['ob']!=""){
+        $order_by = " ORDER BY `".$_GET['ob']."`".' '.$_GET['sort'];
+      }
+
+      $where = "";
+      if($col != "" && $val != ""){
+          $where = " WHERE ".$col."='".$val."'";
+      }
       include "select_table.php";
-      exec_quer("SELECT * FROM $lst");
+      $q="SELECT * FROM ".$lst.$where.' '.$order_by;
+
+      exec_quer($q,"describe ".$lst);
     }
     ?>
   </body>

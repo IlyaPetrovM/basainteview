@@ -34,7 +34,7 @@ try {
             }
         }
         echo "<div><span>Скопируйте название папки с интервью:</span>"; 
-        echo  "<br><a href='index.php?l=interview_file_title&col=id&val=$interview_id'><button autofocus>Название папки в базе</button></a>";
+        echo  "<br><a href='index.php?l=interview_file_title&col=Номер&val=$interview_id'><button autofocus>Название папки в базе</button></a>";
         echo $interview_id.' '.$_POST["start_date"].' '.$_POST["informant"][0].', '.$_POST["sobiratel"][0];
         echo "</div>";
         $rows=substr($rows, 1);

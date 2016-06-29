@@ -1,93 +1,139 @@
  /* http://colorscheme.ru/#0M40Gjriiw0w0 */
-  #dt{text-indent: -500px;height:25px; width:200px;}
-    body{
-        margin: 1em auto;
-        width: 100%;
-        text-align: center;
-      }
-        select, input{
-            display: block;
-            margin: 1em auto;
-            background-color: white;
-            border-radius: 12px;
-            border-style: none;
-            width: 60%;
-            text-align: center;
-        }
-        .helper {
-          display: inline-block;
-          max-width: 60%;
-          background-color: white;
-            border-radius: 12px;
-            border-style: none;
-            text-align: center;
-        }
-        .helper:hover, nav a:hover, input:hover, input:focus{
-            background-color: #6D593C;
-            color: white;
-        }
-        .helper:active{
-          background-color: #7E6A4D;
-        }
-        ::selection {
-          background: black; /* Safari */
-          color: white;
-        }
-        ::-moz-selection {
-          background: black; /* Firefox */
-          color: white;
-        }
-      nav, form{
+  #dt{
+    text-indent: -500px;
+    height:25px; 
+    width:200px;
+  }
+body{
+    margin: 1em auto;
+    width: 100%;
+    text-align: center;
+  }
+    nav a:hover{
+        background-color: #6D593C;
+        color: white;
+    }
+    ::selection {
+      background: black; /* Safari */
+      color: white;
+    }
+    ::-moz-selection {
+      background: black; /* Firefox */
+      color: white;
+    }
+
+/* Navigation */
+      nav{
             padding: 0.5em 1em;
             margin: 0 auto;
-            max-width: 900px;
+            max-width: 80%;
             background-color: #C8AE85;
-            border-radius: 12px;
+            border-radius: 5px;
             border-style: none;
-            display: block;
-      }
-      table {
-        max-width: 100%;
-        width: 900px;
-        margin: 0 auto;
       }
       nav ul {
         list-style: none;
+        padding: 0;
       }
       nav ul li{
         display: inline-block;
-        margin: 0 5px;
-      }
-      td {
-        border-radius: 3px;
-      }
-      tr:hover{
-        background-color: #ccc;
+        margin: 0 15px;
       }
       nav a {
         background-color: white;
         padding: 5px;
         line-height:25pt;
-        border-radius: 1em;
+        border-radius: 5px;
         text-decoration: none;
         color: #a00;
       }
 
-table td a {
+/*Forms */
+form{
+  width: 70%;
+  margin: 0 auto;  
+  color: #7E6A4D;
+}
+form input, 
+form select{
+  border: 0px;
+  border-bottom: 1px dashed #ccc;
+  min-width: 100%;
+  min-height: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+form input[type=textarea]{
+  height:50pt;
+}
+form label{
+  min-width: 100%;
+  text-align: left;
+}
+form a.helper, form input[type=submit]{
+  display: inline-block;
+  padding: 3px;
+  margin-top: 3px;
+  color:#a00;
+  cursor: pointer;
+  font-size: smaller;
+}
+form a.helper:hover, form input[type=submit]:hover{
+  background-color: #ddd;
+  text-decoration: none;
+}
+form tr:hover td{
+  border-bottom-color: transparent;
+}
+
+/* Tables */
+table a {
   text-decoration: none;
   text-align: center;
   font-size: small;
-  color: red;
+  color: #a00;
 }
-table td a.thead.DESC:after{
-  content: " (уб)";
+table td a:hover{
+  text-decoration: underline;
 }
-table td a.thead.ASC:after{
+table th a.thead.DESC:after{
   content: " (вз)";
 }
-table td a.thead:after{
+table th a.thead.ASC:after{
+  content: " (уб)";
+}
+table th a.thead:after{
   color: grey;
 }
-table{
-  border-color: white;
+table {
+  margin: 0 auto;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 14px;
+  background: white;
+  max-width: 70%;
+  width: 70%;
+  border-collapse: collapse;
+  text-align: left;
+}
+th {
+  font-weight: normal;
+  color: #039;
+  border-left: 15px dotted #eee;
+  padding: 10px 8px;
+
+}
+td {
+  border-left: 1px solid #ccc;
+  color: #7E6A4D;
+  padding: 9px 8px;
+  border-bottom: 1px solid #fff;
+}/*остальной код - как в примере выше*/
+tr:hover td{
+  color: #100;
+  border-bottom: 1px solid #ccc;
+  transition: .3s linear;
+}
+tr:hover td a{
+  color: #100;
+  transition: .3s linear;
 }

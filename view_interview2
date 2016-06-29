@@ -1,6 +1,6 @@
 select i.id as 'Номер в базе',  
 	i.start_date as 'Дата интервью',
-	concat(hour(i.record_start_time),':',minute(i.record_start_time)) as 'Время начала',
+	concat(hour(i.record_start_time),':',minute(i.record_start_time)) as ts,
 	group_concat(distinct 
 		inf.last_name,' ',
 		substring(inf.first_name,1,1),' ',
@@ -21,4 +21,5 @@ where
         and i.id = g.interview_id
 and i.id = t.interview_id
 and sob.id = t.sobiratel_id)
-group by i.id;
+group by i.id ASC
+order by `Собиратели` ASC;

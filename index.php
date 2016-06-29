@@ -18,6 +18,7 @@
     'view_interview'=>'Интервью',
     'add_sobiratel' => 'Добавить собирателя',
     'add_informant'=>'Добавить информанта',
+    'meetings' => 'Встречи',
     'add_interview'=>'Добавить интервью'
     );
 
@@ -37,7 +38,7 @@
 
       $where = "";
       if($col != "" && $val != ""){
-          $where = " WHERE ".$col."='".$val."'";
+          $where = " WHERE ".$col." LIKE '".$val."'";
       }
       include "select_table.php";
       $q="SELECT * FROM ".$lst.$where.' '.$order_by;

@@ -20,83 +20,59 @@ var connected=false;
 
 </script>
 <form enctype="multipart/form-data" action="insert_data.php" method="POST" >
-<table>
-<tr>
-<td>
+<ul>
+<li>
   <label for='place_id'>Населённый пункт</label>
-  <td>
   <select name="place_id" id="place" onchange="update_place();" required autofocus>
   <?php execute_query("SELECT CONCAT('<option value=',id,'>',address,'</option>') FROM place ORDER BY id DESC"); ?>
   </select>
-  <td>
-</tr>
-<tr>
-<td>
+</li>
+<li>
   <label for='id'>Номер интервью</label>
-  <td>
   <input name="id" id="interview_id" type="text" maxlength="4" required  value="" />
-  <td>
-</tr>
-<tr>
-<td>
+</li>
+<li>
   <label for='start_date'> Дата интервью</label>
-  <td>
   <input name="start_date" type="date" required />
-  <td>
-  <a class=helper onclick="setYesterday()" >Вчера </a>
+</li>
+<li>
   <a class=helper onclick="setToday()" >Сегодня</a>
-  </td>
-</tr>
-<tr>
-<td>
+  <a class=helper onclick="setYesterday()" >Вчера </a>
+</li>
+<li>
   <label for='record_start_time'>Время</label>
-  <td>
-  <input name="record_start_time" id="time" type="time" required value="" />
-<td>
-  <a class=helper onclick="time.value=('11:00');" >Утром</a>
-  <a class=helper onclick="time.value=('14:00');" >Днём</a>
-  <a class=helper onclick="time.value=('18:00');" >Вечером</a>
+  <input name="record_start_time" type="time" required value="" />
+</li>
+<li>
   <a class=helper onclick="setTimeAgo(1,0)" >Час назад</a>
-  </td>
-</tr>
-<tr>
-<td>
+  <a class=helper onclick="setTime('11:00');" >Утром</a>
+  <a class=helper onclick="setTime('14:00');" >Днём</a>
+  <a class=helper onclick="setTime('18:00');" >Вечером</a></li>
+<li>
   <label for='sobiratel[]'>Собиратели</label>
-    <td>
-    <select name="sobiratel[]" id="sobiratel_set" required multiple onclick="delFromList(this,sobiratel_get)" size="5" class="two-sides right"></select>
-  <td>
+  
     <select id="sobiratel_get" onchange="addToList(this,sobiratel_set)" size="5" class="two-sides left">
       <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,' ',last_name,'</option>') FROM sobiratel"); ?>
     </select>
+    <select name="sobiratel[]" id="sobiratel_set" required multiple onclick="delFromList(this,sobiratel_get)" size="5" class="two-sides right"></select>
   
-</tr>
-<tr>
-<td>
+</li>
+<li>
   <label for='informant[]'>Информанты</label>
-<td>
-  <select id="informant_set" name="informant[]" onclick="delFromList(this,informant_get)" required multiple size=3 class="two-sides right"></select>
-  <td>
-  <select id="informant_get" onchange="addToList(this,informant_set)" size=3 class="two-sides left">
+    <select id="informant_get" onchange="addToList(this,informant_set)" size=3 class="two-sides left">
     <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,' ',middle_name,' ',last_name,' ','</option>') FROM informant"); ?> 
   </select>
-</tr>
-<tr>
-  <td>
+  <select id="informant_set" name="informant[]" onclick="delFromList(this,informant_get)" required multiple size=3 class="two-sides right"></select>
+</li>
+<li>
   <label for='context'>Контекст</label>
-  <td>
   <input name="context" id='icontext' type="textarea" maxlength="499" height="50" />
-  <td>
-</tr>
-<tr>
-<td>
-
-<td>
+</li>
+<li>
   <input type="hidden" name="table" value="interview" />
   <input type="submit" id="submit" value="Добавить интервью" onclick="onSubmit()" />
-  </td>
-<td>
-</tr>
-  </table>
+</li>
+  </ul>
 </form>
 <script type="text/javascript">
 initSelect(sobiratel_get,sobiratel_set);
@@ -137,10 +113,10 @@ function setToday(){
 }
 
 function setTimeAgo(hour,minutes){
-  var d = new Date();
-  d.setHours(d.getHours()-hour);
-  d.setMinutes(d.getMinutes()-minutes);
-  time.value = d.toISOString().split('T')[1].split(".")[0];
+  var time = new Date();
+  time.setHours(time.getHours()-hour);
+  time.setMinutes(time.getMinutes()-minutes);
+  document.getElementsByName("record_start_time")[0].setAttribute('value', time.getHours()+":"+time.getMinutes());
 }
   update_place();
 

@@ -3,16 +3,16 @@ class TableHeader extends RecursiveIteratorIterator {
     function __construct($it) { 
         parent::__construct($it, self::LEAVES_ONLY); 
     }
-
     function current() {
         $l = $_GET['l'];
         $s = $_GET['sort'];
         $col = $_GET['col'];
-        if($s=="ASC"){
+        if($s=="DESC"){
+            $s="ASC"; 
+        }else{
             $s="DESC";
-        }else
-            $s="ASC";
-        return "<td><a href='?l=$l&ob=".parent::current()."&sort=$s' class='thead $s'>" . parent::current(). "</a></td>";
+        }
+        return "<th><a href='?l=$l&ob=".parent::current()."&sort=$s' class='thead $s'>" . parent::current(). "</a></th>";
     }
 
     function beginChildren() { 
@@ -53,7 +53,7 @@ function exec_quer($query,$h){
         $stmt = $conn->prepare($query); 
         $stmt->execute();
 
-    echo '<table border="1">';
+    echo '<table>';
         $result2 = $head->setFetchMode(PDO::FETCH_ASSOC); 
         // set the resulting array to associative
         foreach(new TableHeader(new RecursiveArrayIterator($head->fetchAll(PDO::FETCH_COLUMN))) as $k=>$v) {

@@ -1,8 +1,7 @@
 
 <?php include 'select.php'; ?> 
 <script type="text/javascript">
-var connected=false;
-  var updateIdRequest;
+    var updateIdRequest;
 
   if (window.XMLHttpRequest) updateIdRequest = new XMLHttpRequest(); 
   else if (window.ActiveXObject) {
@@ -17,9 +16,8 @@ var connected=false;
     alert("exeption!");
     }
   }
-
 </script>
-<form enctype="multipart/form-data" action="insert_data.php" method="POST" >
+<form enctype="multipart/form-data" action="?p=insert_data" method="POST" >
 <table>
 <tr>
 <td>
@@ -56,7 +54,7 @@ var connected=false;
   <a class=helper onclick="time.value=('11:00');" >Утром</a>
   <a class=helper onclick="time.value=('14:00');" >Днём</a>
   <a class=helper onclick="time.value=('18:00');" >Вечером</a>
-  <a class=helper onclick="setTimeAgo(1,0)" >Час назад</a>
+<!--   <a class=helper onclick="setTimeAgo(1,0)" >Час назад</a> -->
   </td>
 </tr>
 <tr>
@@ -144,22 +142,6 @@ function setTimeAgo(hour,minutes){
 }
   update_place();
 
-  if (updateIdRequest) {
-    updateIdRequest.onreadystatechange = function() {
-      if (updateIdRequest.readyState == 4 && updateIdRequest.status == 200)  
-      { 
-        var place_id = document.getElementById("place").value;
-        var cnt = updateIdRequest.responseText;
-        if(cnt > 0) cnt++;
-        else cnt = 1;
-        id=fullZero(String(cnt),document.getElementById("interview_id").getAttribute("maxlength")-1);
-        document.getElementById("interview_id").value = place_id+id;
-      }        
-    };  
-  } 
-  else alert("Браузер не поддерживает AJAX");
-    
-    
   function update_place(){
     var place_id = document.getElementById("place").value;
     updateIdRequest.open("POST", 'getLastId.php', true);
@@ -176,4 +158,18 @@ function setTimeAgo(hour,minutes){
     return st;
   }
 
+  if (updateIdRequest) {
+    updateIdRequest.onreadystatechange = function() {
+      if (updateIdRequest.readyState == 4 && updateIdRequest.status == 200)  
+      { 
+        var place_id = document.getElementById("place").value;
+        var cnt = updateIdRequest.responseText;
+        if(cnt > 0) cnt++;
+        else cnt = 1;
+        id=fullZero(String(cnt),document.getElementById("interview_id").getAttribute("maxlength")-1);
+        document.getElementById("interview_id").value = place_id+id;
+      }        
+    };  
+  } 
+  else alert("Браузер не поддерживает AJAX");
 </script>

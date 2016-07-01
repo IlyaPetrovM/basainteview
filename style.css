@@ -137,3 +137,17 @@ tr:hover td a{
   color: #100;
   transition: .3s linear;
 }
+
+/*Code*/
+code{
+  font-size: 9pt;
+  color: black;
+  width: 70%;
+  text-align: left;
+  display: block;
+}
+#interview_file_title{
+  display: block;
+  background: #ddd;
+  transition: .3s linear;
+}

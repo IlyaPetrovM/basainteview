@@ -42,4 +42,9 @@ $dbname = "derevnia";
 	}
 	$conn = null;
 }
+
+if($_POST['query']!=''){
+	execute_query($_POST['query']);
+}
+
 ?>

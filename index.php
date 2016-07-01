@@ -1,12 +1,13 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
     <meta charset="utf-8">
     <title>База интервью
     </title>
     <meta content="">
   <link type="text/css" href="style.css" rel="stylesheet" />
+  <!-- <link type="text/javascript" href="ajax.js" rel="script" /> -->
   </head>
   <body>
   <nav><?php include 'menu.php'; ?> </nav>
@@ -19,7 +20,8 @@
     'add_sobiratel' => 'Добавить собирателя',
     'add_informant'=>'Добавить информанта',
     'meetings' => 'Встречи',
-    'add_interview'=>'Добавить интервью'
+    'add_interview'=>'Добавить интервью',
+    "insert_data" => "Добавление данных"
     );
 
     $lst=$_GET["l"];

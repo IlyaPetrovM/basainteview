@@ -21,7 +21,7 @@
     'add_informant'=>'Добавить информанта',
     'meetings' => 'Встречи',
     'add_interview'=>'Добавить интервью',
-    "insert_data" => "Добавление данных"
+    "insert_data" => "Редактировать"
     );
 
     $lst=$_GET["l"];
@@ -29,7 +29,10 @@
     echo ($titles[$lst].$titles[$page]); 
   ?>
   </h1> 
-    <?php include (htmlspecialchars($page).'.php'); 
+
+    <?php 
+
+    if($page!="") include (htmlspecialchars($page).'.php'); 
     if($lst!=""){
       $col = $_GET['col'];
       $val = $_GET['val'];

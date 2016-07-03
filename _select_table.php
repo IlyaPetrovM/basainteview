@@ -41,10 +41,10 @@ class TableRows extends RecursiveIteratorIterator {
     } 
 } 
 function exec_quer($query,$h){
-    $servername = "localhost";
-    $username = "user";
-    $password = "Licey1553";
-    $dbname = "derevnia";
+    $servername = "mysql85.1gb.ru";
+    $dbname = "gb_x_basaibb2";
+    $username = "gb_x_basaibb2";
+    $password = "d56e8689z23";
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

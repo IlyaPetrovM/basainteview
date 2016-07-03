@@ -137,8 +137,7 @@ if($table=='interview'){
             $query = "INSERT INTO $table ($rows) VALUES ($values)";
         }
     }
-
-sqlTransact($query, "localhost","derevnia","admin","Licey1553");
+sqlTransact($query, "mysql85.1gb.ru","gb_x_basaibb2","gb_x_basaibb2","d56e8689z23");
 if($table=="interview"){
     echo "<h2>Название для папки в базе:</h5><p id=interview_file_title>";
     execute_query("SELECT `Название папки` from interview_file_title where `Номер` like '$interview_id'");

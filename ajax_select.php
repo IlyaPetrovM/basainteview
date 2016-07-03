@@ -5,22 +5,18 @@ class TableRows extends RecursiveIteratorIterator {
         parent::__construct($it, self::LEAVES_ONLY); 
     }
     function current() {
-        return "" . parent::current(). "";
+        return "" . parent::current(). "%%";
     }
     function beginChildren() { 
         echo ""; 
     } 
     function endChildren() { 
-        echo "";
+        echo "##";
     } 
 } 
 
 
-function execute_query($q){
-	$servername = "localhost";
-	$username = "user";
-	$password = "Licey1553";
-	$dbname = "derevnia";
+function execute($q, $servername, $dbname, $username, $password){
 	try {
 	    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,11 +35,8 @@ function execute_query($q){
 	$conn = null;
 }
 
-if($_GET['query']!=''){
-	execute_query($_GET['query']);
-}
 if($_POST['query']!=''){
-	execute_query($_POST['query']);
+	execute($_POST['query'], $_POST[host], $_POST[dbname],$_POST[user],$_POST[pass]);
 }
 
 ?>

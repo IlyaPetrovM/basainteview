@@ -22,23 +22,31 @@
 <td>
   <label for='place_id'>Населённый пункт</label>
   <td>
-  <select name="place_id" id="place" onchange="update_place();" required autofocus>
-   <?php execute_query("SELECT CONCAT('<option value=',id,'>',address,'</option>') FROM place ORDER BY id DESC"); ?>
-  </select>
+  <input type="text" name="place_id" id="place" onchange="update_place();" required disabled value='
+   <?php execute_query("SELECT address FROM place as p
+                          WHERE p.id=
+                          (
+                            select place_id 
+                            from interview as i
+                            WHERE (i.id like \"$_GET[update_id]\")
+                          );
+                      ");
+   ?>
+  ' />
   <td></td>
 </tr>
 <tr>
 <td>
-  <label for='id'>Номер интервью</label>
+  <label for='update_id'>Номер интервью</label>
   <td>
-  <input name="id" id="interview_id" type="text" maxlength="4" required  value="" />
+  <input name="update_id" id="interview_id" type="text" maxlength="4" required  value="<?php echo $_GET[update_id] ?>" readonly />
   <td>
 </tr>
 <tr>
 <td>
   <label for='start_date'> Дата интервью</label>
   <td>
-  <input name="start_date" type="date" required />
+  <input name="start_date" type="date" value='<?php execute_query("select start_date from interview WHERE id = \"$_GET[update_id]\""); ?>' required />
   <td>
   <a class=helper onclick="setYesterday()" >Вчера </a>
   <a class=helper onclick="setToday()" >Сегодня</a>
@@ -48,7 +56,7 @@
 <td>
   <label for='record_start_time'>Время</label>
   <td>
-  <input name="record_start_time" id="time" type="time" required value="" />
+  <input name="record_start_time" id="time" type="time" required value='<?php execute_query("select TIME_FORMAT(record_start_time,\"%H:%i\") from interview WHERE id = \"$_GET[update_id]\""); ?>' />
 <td>
   <a class=helper onclick="time.value=('11:00');" >Утром</a>
   <a class=helper onclick="time.value=('14:00');" >Днём</a>
@@ -60,10 +68,18 @@
 <td>
   <label for='sobiratel[]'>Собиратели</label>
     <td>
-    <select name="sobiratel[]" id="sobiratel_set" required multiple onclick="delFromList(this,sobiratel_get)" size="5" class="two-sides right"></select>
+    <select name="sobiratel[]" id="sobiratel_set" required multiple onclick="delFromList(this,sobiratel_get)" size="5" class="two-sides right">
+      <?php execute_query("SELECT 
+          IF(id in (select sobiratel_id from take WHERE interview_id=\"$_GET[update_id]\"),
+          CONCAT('<option value=',id,' selected>',first_name,' ',last_name,'</option>'),
+          CONCAT('<option value=',id,' hidden>',first_name,' ',last_name,'</option>')) FROM sobiratel"); ?>
+    </select>
   <td>
     <select id="sobiratel_get" onchange="addToList(this,sobiratel_set)" size="5" class="two-sides left">
-      <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,' ',last_name,'</option>') FROM sobiratel"); ?>
+      <?php execute_query("SELECT 
+          IF(id in (select sobiratel_id from take WHERE interview_id=\"$_GET[update_id]\"),
+          CONCAT('<option value=',id,' hidden>',first_name,' ',last_name,'</option>'),
+          CONCAT('<option value=',id,'>',first_name,' ',last_name,'</option>')) FROM sobiratel"); ?>
     </select>
   
 </tr>
@@ -71,10 +87,16 @@
 <td>
   <label for='informant[]'>Информанты</label>
 <td>
-  <select id="informant_set" name="informant[]" onclick="delFromList(this,informant_get)" required multiple size=3 class="two-sides right"></select>
+  <select id="informant_set" name="informant[]" onclick="delFromList(this,informant_get)" required multiple size=3 class="two-sides right">
+    <?php execute_query("SELECT IF(id in (select informant_id from give WHERE interview_id=\"$_GET[update_id]\"),
+        CONCAT('<option value=',id,' selected>',first_name,' ',middle_name,' ',last_name,' ','</option>'),
+        CONCAT('<option value=',id,' hidden>',first_name,' ',middle_name,' ',last_name,' ','</option>')) FROM informant"); ?> 
+  </select>
   <td>
   <select id="informant_get" onchange="addToList(this,informant_set)" size=3 class="two-sides left">
-    <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,' ',middle_name,' ',last_name,' ','</option>') FROM informant"); ?> 
+    <?php execute_query("SELECT IF(id in (select informant_id from give WHERE interview_id=\"$_GET[update_id]\"),
+        CONCAT('<option value=',id,' hidden>',first_name,' ',middle_name,' ',last_name,' ','</option>'),
+        CONCAT('<option value=',id,' >',first_name,' ',middle_name,' ',last_name,' ','</option>')) FROM informant"); ?> 
   </select>
   </td>
 </tr>
@@ -83,7 +105,7 @@
   <label for='context'>Контекст</label>
   </td>
   <td>
-  <input name="context" id='icontext' type="textarea" maxlength="499" height="50" />
+  <input name="context" id='icontext' type="textarea" maxlength="499" height="50" value='<?php execute_query("select context from interview WHERE id = \"$_GET[update_id]\""); ?>' />
   </td>
   <td></td>
 </tr>
@@ -92,7 +114,7 @@
 
 <td>
   <input type="hidden" name="table" value="interview" />
-  <input type="submit" id="submit" value="Добавить интервью" onclick="onSubmit()" />
+  <input type="submit" id="submit" value="Подтвердить изменения" onclick="onSubmit()" />
   </td>
 <td>
 </tr>
@@ -142,7 +164,7 @@ function setTimeAgo(hour,minutes){
   d.setMinutes(d.getMinutes()-minutes);
   time.value = d.toISOString().split('T')[1].split(".")[0];
 }
-  update_place();
+  // update_place();
 
   function update_place(){
     var place_id = document.getElementById("place").value;

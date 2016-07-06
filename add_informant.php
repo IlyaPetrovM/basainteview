@@ -5,7 +5,7 @@
   <input name="first_name" type="text" required maxlength="45" autofocus required />
   </tr><tr><td>
   Отчество:<td>
-  <input name="middle_name" type="text" maxlength="45" required />
+  <input name="middle_name" type="text" maxlength="45" />
   </tr><tr><td>
   Фамилия*:<td>
   <input name="last_name" type="text" required maxlength="45" required />

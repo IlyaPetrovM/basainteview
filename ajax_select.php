@@ -5,13 +5,13 @@ class TableRows extends RecursiveIteratorIterator {
         parent::__construct($it, self::LEAVES_ONLY); 
     }
     function current() {
-        return "" . parent::current(). "%%";
+        return parent::current(). ",";
     }
     function beginChildren() { 
-        echo ""; 
+        echo "["; 
     } 
     function endChildren() { 
-        echo "##";
+        echo "]";
     } 
 } 
 

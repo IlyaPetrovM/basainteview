@@ -7,7 +7,7 @@
     </title>
     <meta content="">
   <link type="text/css" href="style.css" rel="stylesheet" />
-  <!-- <link type="text/javascript" href="ajax.js" rel="script" /> -->
+  
   </head>
   <body>
   <nav><?php include 'menu.php'; ?> </nav>
@@ -15,12 +15,13 @@
   <?php 
     $titles = array(
     'sobiratel' => 'Собиратели',
-    'view_informant'=>'Информанты',
+    'informant'=>'Информанты',
     'view_interview'=>'Интервью',
     'add_sobiratel' => 'Добавить собирателя',
     'add_informant'=>'Добавить информанта',
     'meetings' => 'Встречи',
     'add_interview'=>'Добавить интервью',
+    "insert_data" => "Редактировать"
     );
 
     $lst=$_GET["l"];
@@ -50,5 +51,18 @@
       exec_quer($q,"describe ".$lst);
     }
     ?>
+    <script type="text/javascript" src="ajax.js" ></script>
+    <script type="text/javascript">
+    if (selectReq) {
+      selectReq.onreadystatechange = function() {
+      if (selectReq.readyState == 4 && selectReq.status == 200)  
+      { 
+        var sel = selectReq.responseText;
+        table = parseTable(sel);      
+      }
+      };
+    } else alert("Браузер не поддерживает AJAX / AJAX is not supported");
+    exec_select("select * from interview", "localhost", "derevnia", "user", "Licey1553");
+    </script>
   </body>
 </html>

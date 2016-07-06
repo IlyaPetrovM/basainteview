@@ -1,4 +1,4 @@
-<form action="insert_data.php" method="POST" id=input_area>
+<form action="?p=insert_data" method="POST" id=input_area>
 <table>
 <tr>
 <td>

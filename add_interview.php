@@ -74,7 +74,7 @@
   <select id="informant_set" name="informant[]" onclick="delFromList(this,informant_get)" required multiple size=3 class="two-sides right"></select>
   <td>
   <select id="informant_get" onchange="addToList(this,informant_set)" size=3 class="two-sides left">
-    <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,' ',middle_name,' ',last_name,' ','</option>') FROM informant"); ?> 
+    <?php execute_query("SELECT CONCAT('<option value=',id,'>',first_name,IF(middle_name is not NULL,concat(' ',middle_name),''),' ',last_name,' ','</option>') FROM informant"); ?> 
   </select>
   </td>
 </tr>
@@ -149,8 +149,8 @@ function setTimeAgo(hour,minutes){
     updateIdRequest.open("POST", 'getLastId.php', true);
     updateIdRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     
-    updateIdRequest.send('getLastId='+place_id+'&ajax=1');
-
+    updateIdRequest.send('getLastId='+place_id+'&ajax=1')
+;
   }
   
   function fullZero(st,maxl){

@@ -1,7 +1,8 @@
 <?php
 echo "<meta charset='utf-8'><br/>";
 include 'select.php';
-function sqlTransact($query, $servername, $dbname, $username, $password){
+include 'select_table.php';
+function sqlTransact($query, $servername, $dbname, $username, $password, $is_insert){
     try {
         // begin the transaction
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -10,17 +11,24 @@ function sqlTransact($query, $servername, $dbname, $username, $password){
         $conn->beginTransaction();
         $conn->exec($query);
         $conn->commit();
-        echo "<p style='color:green;'>Данные успешно отредактированы</p>";
+        if($is_insert)
+            echo "<h1 style='color:green;'>Новая запись создана</h1>";
+        else 
+            echo "<p style='color:#2D0;'>Данные успешно отредактированы</p>";
+        $conn = null;
+        return true;
         }
     catch(PDOException $e)
         {
         // roll back the transaction if something failed
         $conn->rollback();
-        echo "<b style='color:red;'>Ошибка: </b>" . $e->getMessage();
-        echo "<p style='color:gray;'>Запрос целиком:</p><code>".$query.'</code>';
+
+        echo "<h1 style='color:red;'>Произошла ошибка</h1><code>" . $e->getMessage()."</code>";
+        echo "<p style='color:red;'>Позовите администратора и покажите ему этот текст:</p><code>".$query.'</code>';
+        $conn = null;
+        return false;
         }
 
-    $conn = null;
     
 }
 
@@ -138,10 +146,15 @@ if($table=='interview'){
         }
     }
 
-sqlTransact($query, "localhost","derevnia","admin","Licey1553");
-if($table=="interview"){
-    echo "<h2>Название для папки в базе:</h5><p id=interview_file_title>";
+$all_good=sqlTransact($query, "localhost","derevnia","admin","Licey1553", ($_POST['update_id']==''));
+if($table=="interview" && $all_good){
+    echo "<h2>Название для папки в базе:</h2>
+<p class=comment>Создайте папку в хранилище интервью и назовите её, как указано на этой странице. Такое же название должны иметь аудиозаписи и документ с описью интервью.</p>
+    <input id=interview_file_title type=textarea style='width: 100%; text-align:center; border: 0px solid red; line-height:40pt;' readonly onclick='this.selectionStart=0;this.selectionEnd=this.value.length;
+    'value='";
     execute_query("SELECT `Название папки` from interview_file_title where `Номер` like '$interview_id'");
-    echo "</p>";
+    echo "''>";
+    echo "<h2>Паспорт интервью:</h2><p class=comment>Выделите и скопируйте паспорт интрeвью в файл с описью ваших аудиозаписей</p>";
+    select_pivot("SELECT * FROM passport_interview WHERE `Номер` like '$interview_id'");
 }
 ?>

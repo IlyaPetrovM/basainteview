@@ -1,14 +1,17 @@
 <?php
 
-class TableSimple extends RecursiveIteratorIterator { 
+class TableRows extends RecursiveIteratorIterator { 
+	
     function __construct($it) { 
         parent::__construct($it, self::LEAVES_ONLY); 
     }
+
     function current() {
-        return "" . parent::current(). "";
+    		$ret = "##".parent::current()."";
+        return $ret;
     }
     function beginChildren() { 
-        echo ""; 
+        echo "["; 
     } 
     function endChildren() { 
         echo "";
@@ -16,11 +19,7 @@ class TableSimple extends RecursiveIteratorIterator {
 } 
 
 
-function execute_query($q){
-	$servername = "localhost";
-	$username = "user";
-	$password = "Licey1553";
-	$dbname = "derevnia";
+function execute_query($q, $servername, $dbname, $username, $password){
 	try {
 	    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -29,7 +28,7 @@ function execute_query($q){
 
 	    // set the resulting array to associative
 	    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
-	    foreach(new TableSimple(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
+	    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
 	        echo $v;
 	    }
 	}
@@ -39,11 +38,10 @@ function execute_query($q){
 	$conn = null;
 }
 
-if($_GET['query']!=''){
-	execute_query($_GET['query']);
-}
-if($_POST['query']!=''){
-	execute_query($_POST['query']);
+echo $_POST['q'];
+if($_POST['q']!=''){
+
+	execute_query($_POST['q'], $_POST["host"], $_POST["dbname"],$_POST["user"],$_POST["pass"]);
 }
 
 ?>
